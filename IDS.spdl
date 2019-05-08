@@ -1,0 +1,74 @@
+/* 
+*IDS protocol 
+*/
+
+// PKI  Infrastruture
+
+const Ikey:  Secretkey;
+const Rkey:  Secretkey;
+
+// The Protocol Description
+usertype MyAutomicMessage;
+
+
+protocol ids(A,B,C)
+    {
+         role A
+             {
+              fresh ma:     MyAtomicMessage;
+              var tc: Ticket;
+              fresh ta: Ticket
+               
+
+              send_1(A, C, {A,ma}Ikey;
+              recv_2(C,A,{tc}pk(C));
+              send_3(A,B,{ta}pk(A));
+
+              claim_A1(A,Secret,ma);
+              claim_A2(A,Secret,tc);
+              claim_A3(A,Alive);
+            
+           role B
+               {
+              fresh mb:      MyAtomicMessage;
+              Var tb: Ticket;
+               fresh tb: Ticket
+
+              send_1(B,C,{B,mb}k(B,C));
+              recv_2(C,B,{tb}pk(C));
+              send_3(B,A,{tb}pk(B));
+
+              claim_B1(B,Secret,mb);
+              claim_B2(B,Secret,tb);
+              claim_B3(B,Alive);
+             
+              }
+           role C
+               {
+              fresh ta:  Ticket;
+              var ma:      MyAtomicMessage;
+               fresh tb: Ticket;
+               var mb:     MyAtomicMessage;
+            
+              recv_1(A,C,{A,ma}k(A,C));
+              send_2(C,A,{ta}pk(C));
+              recv_3(B,C,{B,mb}k(B,C));
+              send_4(C,B,{tb}pk(C));
+
+              claim_C1(C,Secret,ma);
+              claim_C2(C,Secret,ta);
+               claim_C3(C,Secret,mb);
+              claim_C3(C,Secret,tb);
+              claim_C4(C,Alive);
+            
+              }
+      }
+
+
+
+
+
+
+
+
+

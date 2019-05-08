@@ -1,0 +1,65 @@
+
+usertype MyAtomicMessage, Ticket, Sharedkey;
+
+protocol ids(I,R,S)
+   {
+                 role I
+                        {
+                           fresh m: MyAtomicMessage;
+                           var Ti: Ticket;
+                           fresh Ti: Ticket;
+
+                           send_1(I,S.{I,m}k(I,S));
+                           read_2(S,I,{I,Ta}sk(S));
+                           send_3(I,R,{Ta}sk(I));
+                            
+                           claim_I1(I,Secret,m);
+                           claim_I2(I,Secret,Ti);
+                           claim_I3(I,Alive);
+                           claim_I4(I,Niagree);
+                           claim_I5(I,Nisynch);
+                      }
+                role R
+                     {
+                           fresh m: MyAtomicMessage;
+                           var Tr: Ticket;
+                           fresh Tr: Ticket;
+
+                           send_1(R,S.{R,m}k(R,S));
+                           read_2(S,R,{R,Ta}sk(S));
+                           send_3(R,I,{Ta}sk(R));
+                            
+                           claim_R1(I,Secret,m);
+                           claim_R2(I,Secret,Tr);
+                           claim_R3(I,Alive);
+                           claim_R4(I,Niagree);
+                           claim_R5(I,Nisynch);
+                      }
+                role S
+                      {
+                        fresh Ti:Ticket;
+                        fresh Tr:Ticket;
+                        var m:MyAtomicMessage;
+            
+                        recv_1(I,S,{I,M}k(I,S));
+                        send_2(S,I,{T1}sk(C));
+                       recv_3(R,S,{R,M}K(R,S));
+                       send_4(S,R,{T}sk(S));
+
+                      claim_S1(S,Secret,m);
+                      claim_S2(S,Secret,Ti);
+                     claim_S3(S,Secret,Tr);
+                     claim_S4 (S,Alive);
+                     claim_S5(S,Niagree);
+
+
+
+
+
+
+
+
+
+
+              claim_C6(C,Nisynch);
+ 

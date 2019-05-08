@@ -1,0 +1,76 @@
+/* 
+*IDS protocol 
+*/
+
+// PKI  Infrastruture
+
+const pk: Function;
+secret sk: Function;
+inversekeys(pk,sk);
+
+// The Protocol Description
+ usertype MyAtomicMessagae;
+
+
+protocol ids(A,B,C)
+    {
+         role A
+             {
+              fresh m:     MyAtomicMessage;
+              var t: Ticket;
+               fresh t: Ticket;
+              
+
+              send_1(A,C,{A,m}k(A,C));
+              recv_2(C,A,{t}pk(C));
+              send_3(A,B,{t}pk(A));
+
+              claim_A1(A,Secret,m);
+              claim_A2(A,Secret,t);
+              claim_A3(A,Alive);
+              claim_A4(A,Niagree);
+              claim_A5(A,Nisynch);
+              }
+           role B
+               {
+              fresh m:      MyAtomicMessage;
+              var t: Ticket;
+               fresh t: Ticket;
+
+              send_1(B,C,{B,m}k(B,C));
+              recv_2(C,B,{t}pk(C));
+              send_3(B,A,{t}pk(B));
+
+              claim_B1(B,Secret,m);
+              claim_B2(B,Secret,t);
+              claim_B3(B,Alive);
+              claim_B4(B,Niagree);
+              claim_B5(B,Nisynch);
+              }
+           role C
+               {
+              fresh t:  Ticket;
+              var m:      MyAtomicMessage;
+            
+              recv_1(A,C,{A,M}k(A,C));
+              send_2(C,A,{t}pk(C));
+              recv_3(B,C,{B,M}k(B,C));
+              send_4(C,B,{t}pk(C));
+
+              claim_C1(C,Secret,m);
+              claim_C2(C,Secret,t);
+              claim_C3(C,Secret,t);
+              claim_C4(C,Alive);
+              claim_C5(C,Niagree);
+              claim_C6(C,Nisynch);
+              }
+      }
+
+
+
+
+
+
+
+
+

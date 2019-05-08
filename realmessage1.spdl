@@ -1,0 +1,39 @@
+/*
+*  Secrecy protocol
+*  Uses asymetric encryption
+*   Uses symetric encryption
+*/
+    // const Ikey:  Secretkey;
+
+
+
+usertype Message;                           
+
+// Protocol description
+
+                                                                                  
+protocol ids(I, S)
+{
+  role I
+{
+ //const Ikey:  Secretkey;     
+fresh mi: MyAtomicMessage;
+
+send_1(I,S,{I,mi}Ikey(I));
+
+ 
+claim_i1(I,Secret,mi);
+
+
+}
+     role S
+{
+var mi:   MyAtomicMessage;
+
+recv_1(I,S,{I,mi}Ikey(I));
+
+claim_s1(S,Secret,mi);
+
+
+}
+}

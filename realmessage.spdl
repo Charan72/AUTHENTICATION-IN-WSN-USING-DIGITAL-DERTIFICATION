@@ -1,0 +1,44 @@
+/*
+*  Secrecy protocol
+*  Uses asymetric encryption
+*   Uses symetric encryption
+*/
+
+const pk: Function;
+secret sk: Function;
+inversekeys(pk,sk);
+
+usertype  Message;                           
+
+// Protocol description
+
+                                                                                  
+protocol ids(I, S)
+{
+role I
+{
+
+fresh mi:  Message;
+var ts: Ticket;
+
+send_1(I,S,{I,mi}k(I,S));
+recv_2(S,I,{ts}pk(S));
+ 
+claim_I1(I,Secret,mi);
+claim_I2(I,Secret,ts);
+
+}
+role S
+{
+
+
+var mi:   Message;
+fresh ts:  Ticket;
+
+recv_1(I,S,{I,mi}k(I,S));
+send_2(S,I,{ts}pk(S));
+
+claim_s1(S,Secret,mi);
+claim_s2(S,Secret,ts);
+}
+}

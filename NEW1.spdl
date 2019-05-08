@@ -1,0 +1,77 @@
+/* 
+* Uses symetric shared key
+* Uses Asymetric keys
+*/
+
+const pk1: Function;
+secret sk1: Function;
+inversekeys(pk1,sk1);
+const pk3: Function;
+secret sk3: Function;
+inversekeys(pk3,sk3);
+
+usertype MyAtomicMessage;
+
+protocol ids(I,R,S)
+   {
+                 role I
+                        {
+                           fresh mi: MyAtomicMessage;
+                           var Ts: Ticket;
+                           fresh Ti: Ticket;
+
+                           send_1(I,{I,mi}kis;
+                           read_2(S,I,{I,Ts}sk3(S));
+                           send_3(I,R,{Ti}sk1(I));
+                          
+                            
+                           claim_I1(I,Secret,mi);
+                           claim_I2(I,Secret,Ts);
+                            claim_I3(I,Secret,Ti);
+                           claim_I4(I,Alive);
+                           claim_I5(I,Niagree);
+                           claim_I6(I,Nisynch);
+                      }
+
+                role R
+                     {
+                           fresh mr: MyAtomicMessage;
+                           var Ts: Ticket;
+                           fresh Tr: Ticket;
+
+                           send_1(R,S,{R,mr}krs;
+                           read_2(S,R,{R,Ts}sk3(S));
+                           send_3(R,I,{Tr}sk2(R));
+
+                         
+                            
+                           claim_R1(R,Secret,mr);
+                           claim_R2(R,Secret,Ts);
+                           claim_R3(R,Secret,Tr);
+                           claim_R4(R,Alive);
+                           claim_R5(R,Niagree);
+                           claim_R6(R,Nisynch);
+                      }
+                role S
+                      {
+                        fresh Ts:Ticket;
+                        var mi:MyAtomicMessage;
+                        var mr:MyAtomicMessage;
+ 
+                        read_1(I,S,{I,mi}kis);
+                        send_2(S,I,{Ts}sk3(S));
+                        read_3(R,S,{R,mr}Krs;
+                        send_4(S,R,{Ts}sk3(S));
+                      
+
+                      claim_S1(S,Secret,mi);
+                      claim_S2(S,Secret,Ts);
+                      claim _S3(S,Secret,mr);
+                      claim_S3(S,Secret,Ts);
+                      claim_S4 (S,Alive);
+                      claim_S5(S,Niagree);
+                      claim_C6(S,Nisynch);
+                   }
+}
+ 
+ 

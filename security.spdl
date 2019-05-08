@@ -1,0 +1,43 @@
+usertype Secretkey;
+usertype  Message;
+const Fresh: Function;
+const Compromised: Function;
+
+protocol AU(I,R)
+{
+    role I
+    {
+        fresh mi: Message;
+        var tr:  Ticket;
+        
+
+        send_1(I,R, I,{mi}k(I,R) );
+        recv_2(R,I, {mi,tr}k(I,R) );
+        // send_3(I,R, {nr}k(I,R) );
+       // recv_4(R,I, {kir,nr2,ni}k(I,R) );
+        // claim_I1(I,Nisynch);
+        // claim_I2(I,Niagree);
+        claim_I3(I,Secret, mi);
+        claim_I4(I,Secret, k(I,R));
+        //claim_I5(I,Empty, (Fresh,kir));
+          claim_I6(I,Secret,tr);
+    }    
+    
+    role R
+    {
+        var mi: Message;
+        fresh tr:  Ticket;
+        
+
+        recv_1(I,R, I,{mi}k(I,R) );
+        send_2(R,I, {mi,tr}k(I,R) );
+        // recv_3(I,R, {nr}k(I,R) );
+        // send_4(R,I, {kir,nr2,ni}k(I,R) );
+        // claim_R1(R,Nisynch);
+        // claim_R2(R,Niagree);
+        claim_R3(R,Secret, mi);
+        claim_R4(R,Secret, k(I,R));
+        // claim_R5(R,Empty, (Fresh,kir));
+          claim_R6(R,Secret,tr);
+    }
+}

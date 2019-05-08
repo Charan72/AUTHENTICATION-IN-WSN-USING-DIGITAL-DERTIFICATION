@@ -1,0 +1,80 @@
+/* 
+*IDS protocol 
+*/
+
+// PKI  Infrastruture
+
+const pk: Function;
+secret sk: Function;
+inversekeys(pk,sk);
+
+// The Protocol Description
+ usertype Message;
+usertype  Secretkey;
+
+protocol ids(A,B,C)
+    {
+         role A
+             {
+              fresh ma:    Message;
+              var tc: Ticket;
+              fresh tc: Ticket;
+              const k:  Secretkey;
+               
+
+              send_1(A,C,{A,ma}k(A,C));
+              recv_2(C,A,{tc}pk(C));
+              send_3(A,B,{tc}pk(A));
+
+              claim_A1(A,Secret,ma);
+              claim_A2(A,Secret,tc);
+              claim_A3(A,Alive);
+              claim_A4(A,Niagree);
+              claim_A5(A,Nisynch);
+              }
+           role B
+               {
+              fresh mb:      Message;
+              var tc: Ticket;
+               fresh tb: Ticket;
+               const k: Secretkey;
+
+              send_1(B,C,{B,mb}k(B,C));
+              recv_2(C,B,{tb}pk(C));
+              send_3(B,A,{tb}pk(B));
+
+              claim_B1(B,Secret,mb);
+              claim_B2(B,Secret,tb);
+              claim_B3(B,Alive);
+              claim_B4(B,Niagree);
+              claim_B5(B,Nisynch);
+              }
+           role C
+               {
+              fresh ta , tb:  Ticket;
+              var ma , mb:      Message;
+               const k:  Secretkey;
+            
+              recv_1(A,C,{A,ma}k(A,C));
+              send_2(C,A,{ta}pk(C));
+              recv_3(B,C,{B,mb}k(B,C));
+              send_4(C,B,{tb}pk(C));
+
+              claim_C1(C,Secret,ma);
+              claim_C2(C,Secret,ta);
+               claim_C3(C,Secret,mb);
+              claim_C3(C,Secret,tb);
+              claim_C4(C,Alive);
+              claim_C5(C,Niagree);
+              claim_C6(C,Nisynch);
+              }
+     }
+
+
+
+
+
+
+
+
+
